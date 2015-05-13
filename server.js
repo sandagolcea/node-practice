@@ -21,8 +21,12 @@ mongoClient.connect(mongoUri, function (err, db) {
 
 var findCompanyName = function(code, callBack){
   collection.find({ tickerCode: code }).toArray(function(err, results) {
-    console.log(results[0].name);
-    callBack(results[0].name);
+    if (results.length === 0) {
+      console.log('my error');
+      callBack("company not found");
+    } else {
+      callBack(results[0].name);
+    }
   });
 };
 
@@ -30,14 +34,16 @@ app.set('view engine','ejs');
 app.use(express.static(__dirname+'/public'));
 
 app.get('/:ticker', function (request, response) {
-  var myTicker = request.params.ticker;
+  var myTicker = request.params.ticker.toUpperCase();
   console.log('my params '+myTicker);
   findCompanyName(myTicker, function onCompanyNameFound (companyName){
     console.log("Co name is : "+companyName);
-    response.render('index', { tickerCode: request.params.ticker, name: companyName });
+    // if(!companyName) {
+      // response.render('index', { tickerCode: 'ticker code not found', name: 'company not found' });
+    // } else {
+      response.render('index', { tickerCode: request.params.ticker, name: companyName });
+    // }
   });
-  //  db.company.find()[0].name
-
 });
 
 app.listen(port, function () {

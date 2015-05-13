@@ -1,13 +1,5 @@
-describe('GitUserSearchController', function() {
-  beforeEach(module('GitUserSearch'));
-
-  var ctrl;
-
-  beforeEach(inject(function($controller) {
-    ctrl = $controller('GitUserSearchController');
-  }));
-  
-  it('does things', function(){
+describe('homepage', function() {
+  it('displays company name', function(){
     // expect things here
   });
 });
