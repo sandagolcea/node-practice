@@ -38,11 +38,7 @@ app.get('/:ticker', function (request, response) {
   console.log('my params '+myTicker);
   findCompanyName(myTicker, function onCompanyNameFound (companyName){
     console.log("Co name is : "+companyName);
-    // if(!companyName) {
-      // response.render('index', { tickerCode: 'ticker code not found', name: 'company not found' });
-    // } else {
       response.render('index', { tickerCode: request.params.ticker, name: companyName });
-    // }
   });
 });
 
